@@ -12,7 +12,7 @@ job.setJdk('JDK 11')
 job.setAssignedLabel(jenkins.getSelfLabel())
 
 // Add a build step
-job.getBuildersList().add(new Shell("echo 'Hello, World!'"))
+//job.getBuildersList().add(new Shell("echo 'Hello, World!'"))
 
 // Save the job configuration
 job.save()
