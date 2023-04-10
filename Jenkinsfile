@@ -25,6 +25,15 @@ pipeline {
                     
                     // Define the job configuration XML
                       jobXml = """
+                      <views>
+                            <hudson.model.AllView>
+                            <owner class="com.cloudbees.hudson.plugins.folder.Folder" reference="../../.."/>
+                            <name>All</name>
+                            <filterExecutors>false</filterExecutors>
+                            <filterQueue>false</filterQueue>
+                            <properties class="hudson.model.View$PropertyList"/>
+                            </hudson.model.AllView>
+                        </views>
                         <project>
                             <description>${jobDescription}</description>
 
