@@ -1,18 +1,30 @@
-import jenkins.model.*
-import hudson.model.*
+import groovy.transform.Field
 
-def jenkins = Jenkins.getInstance()
-
-// Create a new Freestyle project
-def job = jenkins.createProject(FreeStyleProject, 'My New Job')
-
-// Set the build parameters
-job.setDescription('This is my new Jenkins job')
-job.setJdk('JDK 11')
-job.setAssignedLabel(jenkins.getSelfLabel())
-
-// Add a build step
-//job.getBuildersList().add(new Shell("echo 'Hello, World!'"))
-
-// Save the job configuration
-job.save()
+@Field
+def jobXml = """
+                        <project>
+                            <description>${jobDescription}</description>
+                            <scm class="hudson.plugins.git.GitSCM" plugin="git@3.3.2">
+                            <configVersion>1</configVersion>
+                            <userRemoteConfigs>
+                                <hudson.plugins.git.UserRemoteConfig>
+                                <url>https://github.com/peterjenkins1/jenkins-scripts/</url>
+                                </hudson.plugins.git.UserRemoteConfig>
+                            </userRemoteConfigs>
+                            <branches>
+                                <hudson.plugins.git.BranchSpec>
+                                <name>*/master</name>
+                                </hudson.plugins.git.BranchSpec>
+                            </branches>
+                            <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
+                            <submoduleCfg class="list"/>
+                            <extensions/>
+                            </scm>
+                            <builders>
+                                <hudson.tasks.Shell>
+                                    <command>echo 'Hello, world!'</command>
+                                </hudson.tasks.Shell>
+                            </builders>
+                        </project>
+                    """
+return this
