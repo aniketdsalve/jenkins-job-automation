@@ -73,11 +73,6 @@ pipeline {
                 }
             }
         }
-        stage('check folder'){
-            steps{
-                sh 'cd /Dev-CICD-05 /Dev'
-            }
-        }
     }
 }
     
