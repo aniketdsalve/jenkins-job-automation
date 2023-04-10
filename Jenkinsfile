@@ -12,7 +12,7 @@ pipeline {
         stage('create job') {
             steps {
                 script {
- 
+                    mkdir 'Dev_1'
                     echo "Current workspace is ${env.WORKSPACE}"
                    
                     Jenkins jenkins = Jenkins.instance
