@@ -9,12 +9,15 @@ pipeline {
             steps {  cleanWs()  }
         }
         
-        stage('create job') {
-            steps {
-
+        stage('check folder'){
+            steps{
                 sh '''#!/bin/bash
                     mkdir 'Dev_1'
                 '''
+            }
+        }
+        stage('create job') {
+            steps {
                 script {
                     
                     echo "Current workspace is ${env.WORKSPACE}"
