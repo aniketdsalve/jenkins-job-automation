@@ -1,4 +1,5 @@
 import jenkins.model.*
+import jobXml from create-jobXml
 
 pipeline {
     agent { node { label 'slave-1' } }
@@ -27,7 +28,7 @@ pipeline {
                     def jobDescription = 'This is demo-job1 created by Jenkinsfile'
                     
                     // Define the job configuration XML
-                    def jobXml = load 'jenkins-job-automation/create-jobXml.groovy'
+                    //def jobXml = jobXml
 
                     // Check if the job exists
                     if (jenkins.getItem(jobName) == null) {
