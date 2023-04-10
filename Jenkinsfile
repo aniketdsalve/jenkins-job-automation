@@ -6,14 +6,10 @@ pipeline {
 
     stages {
         stage('Clean Workspace') {
-            steps {  cleanWs()  }
-        }
-        
-        stage('check folder'){
-            steps{
-                sh 'mkdir Dev'
+            steps {  cleanWs()  
             }
         }
+        
         stage('create job') {
             steps {
                 script {
@@ -60,8 +56,6 @@ pipeline {
                         </project>
                     """
 
-
-
                     // Check if the job exists
                     if (jenkins.getItem(jobName) == null) {
                         println "The '${jobName}' job does not exist."
@@ -69,17 +63,19 @@ pipeline {
                         // Create the job
                         def xmlStream = new ByteArrayInputStream(jobXml.getBytes())        
                         jenkins.createProjectFromXML(jobName, xmlStream)
-                        
-                        
+                                                
                         // Print a message
                         println "Created the '${jobName}' job successfully" 
-                        
-                        
                         
                     } else {
                         println "The '${jobName}' job already exists."
                     }   
                 }
+            }
+        }
+        stage('check folder'){
+            steps{
+                sh 'cd /Dev-CICD-05 /Dev'
             }
         }
     }
