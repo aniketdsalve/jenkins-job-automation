@@ -27,4 +27,4 @@ def jobXml = """
                             </builders>
                         </project>
                     """
-return this
+return this;
