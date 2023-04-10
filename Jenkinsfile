@@ -11,9 +11,7 @@ pipeline {
         
         stage('check folder'){
             steps{
-                sh '''#!/bin/bash
-                    mkdir 'Dev_1'
-                '''
+                sh 'mkdir Dev'
             }
         }
         stage('create job') {
