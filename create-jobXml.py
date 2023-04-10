@@ -1,7 +1,5 @@
-import groovy.transform.Field
 
-@Field
-def jobXml = """
+jobXml = """
                         <project>
                             <description>${jobDescription}</description>
                             <scm class="hudson.plugins.git.GitSCM" plugin="git@3.3.2">
@@ -27,4 +25,4 @@ def jobXml = """
                             </builders>
                         </project>
                     """
-return this;
+
