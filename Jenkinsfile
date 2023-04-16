@@ -15,7 +15,7 @@ pipeline {
                 script {
                     
                     echo "Current workspace is ${env.WORKSPACE}"
-                   
+                    Jenkins jenkins2 = Jenkins.instance  #Testing purpose 
                     Jenkins jenkins = Jenkins.instance
                     
                     // Set the job name and description
