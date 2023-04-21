@@ -20,16 +20,18 @@ pipeline {
                         }
 
                     	scm {
-                          github(\'git@bitbucket.org:sohesh/onborddeveloperstack.git\', \'*/dev\')
+                          github(\'sohesh/onborddeveloperstack\', \'*/dev\', String protocol = \'ssh\', String host = \'bitbucket.org\')
                           
                         }
                         wrappers {
                             nodejs('NodeJS')
                         }
+                        
                         environmentVariables {
                             keepBuildVariables(false)
                             keepSystemVariables(false)
-                            env('Properties Content', 'PATH=$PATH:/var/lib/jenkins/.serverless/bin')
+                            env(\'PATH\', \'$PATH:/var/lib/jenkins/.serverless/bin\' )
+                            
                         }
 
                     	steps {
