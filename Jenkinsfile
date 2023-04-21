@@ -1,78 +1,47 @@
-import jenkins.model.*
-
-
 pipeline {
-    agent { node { label 'slave-1' } }
+    agent { label 'master' }
+    
+    parameters {
+    choice(name: 'FOLDER_NAME', choices: ['OnBoardingDeveloperStack', 'Dev'], description: 'Select your Choice')
+    string(name: 'JOB_NAME', defaultValue: 'DEMO-', description: 'Please enter Job Name.', trim: true)
+  }
+  
 
     stages {
-        stage('Clean Workspace') {
-            steps {  cleanWs()  
-            }
-        }
-        
-        stage('create job') {
+        stage('Create Job') {
             steps {
                 script {
                     
-                    echo "Current workspace is ${env.WORKSPACE}"
-
-                    Jenkins jenkins = Jenkins.instance
                     
-                    // Set the job name and description
-                    def jobName = params.jobName
-                    def jobDescription = 'This is demo-job1 created by Jenkinsfile'
-                    def gitUrl = 'https://github.com/aniketdsalve/aniketdsalve.github.io.git'
-                    def branchName = '*/main'
-                    
-                    // Define the job configuration XML
-                      jobXml = """
-                        <project>
-                            <description>${jobDescription}</description>
+                    jobDsl sandbox: true, scriptText: '''freeStyleJob("${FOLDER_NAME}/${JOB_NAME}") {
+                    	
+					    logRotator {
+                            numToKeep(3)
+                            daysToKeep(3)
+                        }
 
-                            <scm class="hudson.plugins.git.GitSCM" plugin="git@3.3.2">
-                            <configVersion>1</configVersion>
-                            <userRemoteConfigs>
-                                <hudson.plugins.git.UserRemoteConfig>
-                                <url>${gitUrl}</url>
-                                </hudson.plugins.git.UserRemoteConfig>
-                            </userRemoteConfigs>
-
-                            <branches>
-                                <hudson.plugins.git.BranchSpec>
-                                <name>${branchName}</name>
-                                </hudson.plugins.git.BranchSpec>
-                            </branches>
-
-                            <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
-                            <submoduleCfg class="list"/>
-                            <extensions/>
-                            </scm>
-
-                            <builders>
-                                <hudson.tasks.Shell>
-                                    <command>echo 'Hello, world!'</command>
-                                </hudson.tasks.Shell>
-                            </builders>
-                        </project>
-                    """
-
-                    // Check if the job exists
-                    if (jenkins.getItem(jobName) == null) {
-                        println "The '${jobName}' job does not exist."
-                
-                        // Create the job
-                        def xmlStream = new ByteArrayInputStream(jobXml.getBytes())        
-                        jenkins.createProjectFromXML(jobName, xmlStream)
-                                                
-                        // Print a message
-                        println "Created the '${jobName}' job successfully" 
+                    	scm {
+                          github(\'git@bitbucket.org:sohesh/onborddeveloperstack.git\', \'*/dev\')
+                        }
                         
-                    } else {
-                        println "The '${jobName}' job already exists."
-                    }   
+                        wrappers {
+                            nodejs('NodeJS')
+                        }
+                        
+                        environmentVariables {
+                            keepBuildVariables(false)
+                            keepSystemVariables(false)
+                            env('Properties Content', 'PATH=$PATH:/var/lib/jenkins/.serverless/bin')
+                        }
+
+                    	steps {
+                    		shell('cd ${PATH_DETAILS}/ \\nnpm install \\nserverless-package-python-functions \\nnpm install serverless-package-delete-loggroups \\nenv')
+                    	}
+                    
+                    }'''
+					
                 }
             }
         }
     }
 }
-    
