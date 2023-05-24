@@ -6,7 +6,6 @@ pipeline {
     string(name: 'JOB_NAME', defaultValue: 'DEMO-', description: 'Please enter Job Name.', trim: true)
   }
   
-
     stages {
         stage('Create Job') {
             steps {
