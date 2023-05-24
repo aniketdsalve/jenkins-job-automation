@@ -11,7 +11,7 @@ pipeline {
             steps {
                 script {
                     
-                    
+         
                     jobDsl sandbox: true, scriptText: '''freeStyleJob("${FOLDER_NAME}/${JOB_NAME}") {
                     	
 					    logRotator {
