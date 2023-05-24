@@ -3,7 +3,6 @@ pipeline {
     parameters {
     choice choices: ['Dev', 'Prod', 'SIT'], description: 'Choose your environment', name: 'Env'
   }
-
     stages {
         stage('Create Freestyle Job') {
             steps {
