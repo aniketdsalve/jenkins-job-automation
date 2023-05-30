@@ -8,7 +8,7 @@ pipeline {
             steps {
                 script {
           
-                    def envr = params.Env
+                    def envr = params.Env  
                     def JOB_NAME = params.JOB_NAME
                     jobDsl sandbox: true, scriptText: '''freeStyleJob("Dev/${JOB_NAME}") {
                     	logRotator(-1, 10)
