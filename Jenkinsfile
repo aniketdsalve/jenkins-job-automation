@@ -8,7 +8,7 @@ pipeline {
     stages {
         stage('Create Job') {
             steps {
-                script {
+                script { 
   
                     jobDsl sandbox: true, scriptText: '''freeStyleJob("${FOLDER_NAME}/${JOB_NAME}") {
                     	
