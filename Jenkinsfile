@@ -9,7 +9,7 @@ pipeline {
         stage('Create Job') {
             steps {
                 script {
-                    
+                 
                     jobDsl sandbox: true, scriptText: '''freeStyleJob("${FOLDER_NAME}/${JOB_NAME}") {
                     	
 					    logRotator {
