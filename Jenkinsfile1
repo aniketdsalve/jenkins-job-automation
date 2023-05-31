@@ -7,7 +7,7 @@ pipeline {
         stage('Create Freestyle Job') {
             steps {
                 script {
-        
+      
                     def envr = params.Env  
                     def JOB_NAME = params.JOB_NAME
                     jobDsl sandbox: true, scriptText: '''freeStyleJob("Dev/${JOB_NAME}") {
